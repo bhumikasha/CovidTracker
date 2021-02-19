@@ -25,8 +25,7 @@ class CovidTracker extends Component {
         e.preventDefault();
         let filteredValues = this.state.users.filter(a=>{ return this.state.search === a.country});
         console.log(filteredValues);
-        let y = this.setState({search: filteredValues.country});
-        console.log(this.state.search);
+        filteredValues.map(a=>{return this.setState({search: console.log(a.country)})});
     }
 
     render() {
