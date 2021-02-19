@@ -5,7 +5,8 @@ class CovidTracker extends Component {
     constructor(){
         super();
         this.state = {
-            users: []
+            users: [],
+            search: ""
         }
     }
 
@@ -15,18 +16,37 @@ class CovidTracker extends Component {
         .then(data => this.setState({ users: data }))
     }
 
+    handleInput = (event) => {
+        let x = event.target.value;
+        this.setState({search:x})
+    }
+
+    handleClick = (e) => {
+        e.preventDefault();
+        let filteredValues = this.state.users.filter(a=>{ return this.state.search === a.country});
+        console.log(filteredValues);
+        let y = this.setState({search: filteredValues.country});
+        console.log(this.state.search);
+    }
+
     render() {
         return(
-            <div>
+            <div><br/>
+            <input className="LeftAlign" onChange={this.handleInput}></input>
+            <button onClick={this.handleClick}>Search</button><br/><br/>
             <table>
                 <tr>
-                    <th>Number of Cases</th>
                     <th>Country</th>
+                    <th>Total Cases</th>
+                    <th>Active Cases</th>
+                    <th>Deaths</th>
                 </tr>
                 {this.state.users.map(a=>{return <tbody id="customers">
                 <tr>
-                    <td>{a.cases}</td>
                     <td>{a.country}</td>
+                    <td>{a.cases}</td>
+                    <td>{a.activePerOneMillion}</td>
+                    <td>{a.deaths}</td>
                 </tr>
                 </tbody>
             })};
